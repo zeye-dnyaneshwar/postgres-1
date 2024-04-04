@@ -3,7 +3,7 @@ const {Sequelize}=require("sequelize")
 class DatabaseConnector{
     constructor(){
         this.PG_DB_URI=process.env.PG_DB_URI
-        this.pgConn=new Sequelize(this.PG_DB_URI)
+        this.pgConn=new Sequelize(this.PG_DB_URI,{ logging: Boolean(0) })
         this.POSTGRES_RETRY_COUNT=0
         this.POSTGRES_RETRY_LIMIT=3
         this.RETRY_TIMEOUT=5*1000 //5 seconds
