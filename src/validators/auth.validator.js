@@ -17,10 +17,10 @@ function loginUserValidator(params) {
       isValid = false;
       errorMessage += "Mandatory fields are missing.";
     }
-    if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(params.email)) {
-      isValid = false;
-      errorMessage += "Given email is not valid";
-    }
+      if (params.email&&!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/).test(params.email)) {
+        isValid = false;
+        errorMessage += "Given email is not valid";
+      }
     return { isValid, errorMessage, params };
   }
   
