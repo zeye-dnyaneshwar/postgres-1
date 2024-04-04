@@ -17,17 +17,21 @@ class DatabaseConnector{
                 this.connectToPostgres();
               }, this.RETRY_TIMEOUT);
             } else {
-              logger.error("Postgres connection error", error);
-              logger.info("Retry Limit Exceeded. Terminating process");
+              console.error("Postgres connection error", error);
+              console.info("Retry Limit Exceeded. Terminating process");
               process.exit(0);
             }
     }
     async connectToPostgres() {
         this.pgConn
           .sync({ alter: true })
-          .then(() => logger.log("Connected to Postgres"))
+          .then(() => console.log("Connected to Postgres"))
           .catch((error) => {
             this.handleDBConnectionError(error);
           });
     }
 }
+
+const db=new DatabaseConnector()
+
+module.exports=db
