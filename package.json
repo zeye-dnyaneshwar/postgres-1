@@ -1,0 +1,8 @@
+{
+  "name": "postgres-1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/zeye-dnyaneshwar/postgres-1.git",
+  "author": "dnyaneshwar <dnyaneshwar@zealeye.com>",
+  "license": "MIT"
+}
