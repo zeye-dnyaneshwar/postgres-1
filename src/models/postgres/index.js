@@ -11,4 +11,3 @@ Users.belongsTo(Departments)
 
 Designations.hasMany(Users)
 Users.belongsTo(Designations)
-

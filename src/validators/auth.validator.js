@@ -10,7 +10,7 @@ function loginUserValidator(params) {
   }
   
   const registerUserValidator=(params)=> {
-    const requiredFields = ["email", "password", "designation", "department",  "employeeId", "name"];
+    const requiredFields = ["email", "password","employeeId", "name"];
     let isValid = true;
     let errorMessage = "";
     if (!requiredFields.every((field) => (Object.keys(params).includes(field)))) {

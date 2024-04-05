@@ -1,6 +1,7 @@
 const { registerUserValidator } = require("../validators/auth.validator")
 const userContext=require("../db/context/users.context")
 const bcrypt=require("bcrypt")
+const {PASSWORD_HASH_SALT}=require("../config/constants")
 
 const userRegisterController=async(req,res)=>{
    try {

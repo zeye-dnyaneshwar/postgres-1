@@ -1,6 +1,6 @@
 require("dotenv").config()
 require("./db").connectToPostgres()
-
+require("./models/postgres/index")
 const http=require("http")
 const app=require("./app")
 
