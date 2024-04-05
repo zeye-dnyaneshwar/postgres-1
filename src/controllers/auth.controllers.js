@@ -1,7 +1,8 @@
-const { registerUserValidator } = require("../validators/auth.validator")
+const { registerUserValidator, loginUserValidator } = require("../validators/auth.validator")
 const userContext=require("../db/context/users.context")
 const bcrypt=require("bcrypt")
-const {PASSWORD_HASH_SALT}=require("../config/constants")
+const {PASSWORD_HASH_SALT,JWT_SECRET,JWT_EXPIRY}=require("../config/constants")
+const jwt=require("jsonwebtoken")
 
 const userRegisterController=async(req,res)=>{
    try {
@@ -30,8 +31,28 @@ const userRegisterController=async(req,res)=>{
    }
 }
 
-const userLoginRouter=async(req,res)=>{
-   res.send("login")
+const userLoginController=async(req,res)=>{
+   try {
+      const {isValid,params,errorMessage}=loginUserValidator(req.body)
+      if(!isValid){
+         return res.status(400).json({ error: "Validation Error", errorDescription: errorMessage });
+      }
+      const user = await userContext.getUserByEmail(params.email);
+      if(!user){
+         return res.status(422).json({error: "User Not Found", errorDescription: "Please Register First"})
+      }
+      const isPasswordValid = await bcrypt.compare(params.password, user.password);
+      if (!isPasswordValid) {
+      return res.status(422).json({ error: "Invalid email/password", errorDescription: "Given email/password is invalid or not registered" });
+      }
+      const token = jwt.sign({ id: user.id, email: user.email, }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
+      return res.status(200).json({ message: "Login Successful", token });
+   } catch (error) {
+      console.error("Registration Error", error);
+      return res.status(500).json({ error: "Internal server error", errorDescription: error.message });
+   }
 }
 
-module.exports={userRegisterController,userLoginRouter}
+ 
+
+module.exports={userRegisterController,userLoginController}
